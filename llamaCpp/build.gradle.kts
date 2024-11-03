@@ -1,8 +1,20 @@
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+
 plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.android.library)
-    alias(libs.plugins.maven.publish)
-    alias(libs.plugins.gradleup.nmcp)
+    alias(libs.plugins.maven.publish) apply true
+    alias(libs.plugins.gradleup.nmcp) apply true
+}
+
+mavenPublishing {
+    configure(
+        AndroidSingleVariantLibrary(
+            variant = "release",
+            sourcesJar = true,
+            publishJavadocJar = true,
+        )
+    )
 }
 
 fun nativeArchitectures(): List<String> {

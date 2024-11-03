@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.maven.publish)
-    alias(libs.plugins.gradleup.nmcp)
+    alias(libs.plugins.maven.publish) apply false
+    alias(libs.plugins.gradleup.nmcp) apply false
 }
 
 android {

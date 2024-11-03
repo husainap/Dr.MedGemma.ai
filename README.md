@@ -30,7 +30,7 @@ Add the following to your project's `build.gradle`:
 
 ```gradle
 dependencies {
-    implementation 'org.nehuatl.llamacpp:0.1.0'
+    implementation 'io.github.ljcamargo:llamacpp-kotlin:0.1.0'
 }
 ```
 
