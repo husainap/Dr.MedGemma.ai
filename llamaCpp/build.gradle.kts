@@ -23,9 +23,27 @@ fun nativeArchitectures(): List<String> {
     return archs.filter { it != "armeabi-v7a" && it != "x86" } // Not building for 32-bit architectures
 }
 
+fun detectTargetPlatform(): String? {
+    val taskName = gradle.startParameter.taskRequests
+        .flatMap { it.args }
+        .find { it.contains("buildCMake") }
+
+    return when {
+        taskName?.contains("x86_64", ignoreCase = true) == true -> "x86_64"
+        taskName?.contains("arm64", ignoreCase = true) == true -> "arm64"
+        else -> null // Default or unknown platform
+    }
+}
+val libsForPlatform = when (detectTargetPlatform()) {
+    "arm64" -> listOf("rnllama_v8", "rnllama_v8_2_fp16", "rnllama_v8_4_fp16_dotprod_i8mm")
+    "x86_64" -> listOf("rnllama_x86_64", "rnllama")
+    else -> listOf("rnllama", "rnllama_v8") // Default or fallback libraries
+}
+
 android {
     namespace = "org.nehuatl.llamacpp"
     compileSdk = 35
+    ndkVersion = "25.1.8937393"
 
     defaultConfig {
         minSdk = 24
@@ -34,12 +52,31 @@ android {
         consumerProguardFiles("consumer-rules.pro")
         externalNativeBuild {
             cmake {
-                abiFilters(*nativeArchitectures().toTypedArray())
-                arguments("-DLLAMA_BUILD_COMMON=ON", "-DCMAKE_BUILD_TYPE=Release")
+                abiFilters.add("arm64-v8a")
+                //abiFilters(*nativeArchitectures().toTypedArray())
+                arguments += listOf(
+                    "-DLLAMA_BUILD_COMMON=ON",
+                    "-DCMAKE_BUILD_TYPE=Release"
+                )
                 cppFlags("")
             }
         }
+        ndk {
+            //noinspection ChromeOsAbiSupport
+            abiFilters.add("arm64-v8a")
+        }
     }
+    /*buildFeatures {
+        prefabPublishing = true
+    }
+
+    prefab {
+        libsForPlatform.forEach { libName ->
+            create(libName) {
+                headers = "src/main/cpp/lib" // Common header path
+            }
+        }
+    }*/
 
     buildTypes {
         release {

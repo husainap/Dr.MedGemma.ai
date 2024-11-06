@@ -97,7 +97,7 @@ class LlamaAndroid {
         llamaContextLimit = limit
     }
 
-    suspend fun initContext(params: Map<String, Any>): Map<String, Any>? {
+    fun initContext(params: Map<String, Any>): Map<String, Any>? {
         return try {
             if (contexts.size >= llamaContextLimit) {
                 throw Exception("Context limit reached")

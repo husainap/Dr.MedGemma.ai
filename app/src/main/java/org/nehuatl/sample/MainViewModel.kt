@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import org.nehuatl.llamacpp.LlamaHelper
+import java.io.File
 
 class MainViewModel: ViewModel() {
 
@@ -20,9 +21,9 @@ class MainViewModel: ViewModel() {
     val text = MutableStateFlow("")
 
     // load model into memory
-    suspend fun loadModel() {
+    suspend fun loadModel(path: String) {
         llamaHelper.load(
-            path = "/sdcard/Download/llama.ggmlv3.q4_0.bin", // GGUF model already in filesystem
+            path = path, // GGUF model already in filesystem
             contextLength = 2048,
         )
     }

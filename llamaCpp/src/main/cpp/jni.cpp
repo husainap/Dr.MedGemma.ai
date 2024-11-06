@@ -193,7 +193,7 @@ struct CallbackContext {
 };
 
 JNIEXPORT jlong JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_initContext(
+Java_org_nehuatl_llamacpp_LlamaContext_initContext(
         JNIEnv *env,
         jobject thiz,
         jstring model_path_str,
@@ -266,7 +266,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_initContext(
 }
 
 JNIEXPORT jobject JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_loadModelDetails(
+Java_org_nehuatl_llamacpp_LlamaContext_loadModelDetails(
         JNIEnv *env,
         jobject thiz,
         jlong context_ptr
@@ -299,7 +299,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_loadModelDetails(
 }
 
 JNIEXPORT jstring JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_getFormattedChat(
+Java_org_nehuatl_llamacpp_LlamaContext_getFormattedChat(
         JNIEnv *env,
         jobject thiz,
         jlong context_ptr,
@@ -355,7 +355,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_getFormattedChat(
 }
 
 JNIEXPORT jobject JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_loadSession(
+Java_org_nehuatl_llamacpp_LlamaContext_loadSession(
         JNIEnv *env,
         jobject thiz,
         jlong context_ptr,
@@ -384,7 +384,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_loadSession(
 }
 
 JNIEXPORT jint JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_saveSession(
+Java_org_nehuatl_llamacpp_LlamaContext_saveSession(
         JNIEnv *env,
         jobject thiz,
         jlong context_ptr,
@@ -433,7 +433,7 @@ static inline jobject tokenProbsToMap(
 }
 
 JNIEXPORT jobject JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_doCompletion(
+Java_org_nehuatl_llamacpp_LlamaContext_doCompletion(
         JNIEnv *env,
         jobject thiz,
         jlong context_ptr,
@@ -639,7 +639,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_doCompletion(
 }
 
 JNIEXPORT void JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_stopCompletion(
+Java_org_nehuatl_llamacpp_LlamaContext_stopCompletion(
         JNIEnv *env, jobject thiz, jlong context_ptr) {
     UNUSED(env);
     UNUSED(thiz);
@@ -648,7 +648,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_stopCompletion(
 }
 
 JNIEXPORT jboolean JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_isPredicting(
+Java_org_nehuatl_llamacpp_LlamaContext_isPredicting(
         JNIEnv *env, jobject thiz, jlong context_ptr) {
     UNUSED(env);
     UNUSED(thiz);
@@ -657,7 +657,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_isPredicting(
 }
 
 JNIEXPORT jobject JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_tokenize(
+Java_org_nehuatl_llamacpp_LlamaContext_tokenize(
         JNIEnv *env, jobject thiz, jlong context_ptr, jstring text) {
     UNUSED(thiz);
     auto llama = context_map[(long) context_ptr];
@@ -680,7 +680,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_tokenize(
 }
 
 JNIEXPORT jstring JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_detokenize(
+Java_org_nehuatl_llamacpp_LlamaContext_detokenize(
         JNIEnv *env, jobject thiz, jlong context_ptr, jintArray tokens) {
     UNUSED(thiz);
     auto llama = context_map[(long) context_ptr];
@@ -700,7 +700,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_detokenize(
 }
 
 JNIEXPORT jboolean JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_isEmbeddingEnabled(
+Java_org_nehuatl_llamacpp_LlamaContext_isEmbeddingEnabled(
         JNIEnv *env, jobject thiz, jlong context_ptr) {
     UNUSED(env);
     UNUSED(thiz);
@@ -709,7 +709,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_isEmbeddingEnabled(
 }
 
 JNIEXPORT jobject JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_embedding(
+Java_org_nehuatl_llamacpp_LlamaContext_embedding(
         JNIEnv *env, jobject thiz, jlong context_ptr, jstring text) {
     UNUSED(thiz);
     auto llama = context_map[(long) context_ptr];
@@ -747,7 +747,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_embedding(
 }
 
 JNIEXPORT jstring JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_bench(
+Java_org_nehuatl_llamacpp_LlamaContext_bench(
         JNIEnv *env,
         jobject thiz,
         jlong context_ptr,
@@ -763,7 +763,7 @@ Java_org_nehuatl_amlonet_llama_LlamaContext_bench(
 }
 
 JNIEXPORT void JNICALL
-Java_org_nehuatl_amlonet_llama_LlamaContext_freeContext(
+Java_org_nehuatl_llamacpp_LlamaContext_freeContext(
         JNIEnv *env, jobject thiz, jlong context_ptr) {
     UNUSED(env);
     UNUSED(thiz);
