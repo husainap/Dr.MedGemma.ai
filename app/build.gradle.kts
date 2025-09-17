@@ -14,13 +14,13 @@ fun nativeArchitectures(): List<String> {
 
 android {
     namespace = "org.nehuatl.sample"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "25.1.8937393"
 
     defaultConfig {
         applicationId = "org.nehuatl.sample"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
