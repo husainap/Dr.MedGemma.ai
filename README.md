@@ -10,6 +10,9 @@ This is a very early alpha version and API may change in the future.
 
 [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P6149YRQ)
 
+## News
+- Library has been updated to comply with 16kb pagination now enforced
+
 ## Features
 
 - Helper class to handle initialization and context handling

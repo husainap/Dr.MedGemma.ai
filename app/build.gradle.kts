@@ -15,7 +15,7 @@ fun nativeArchitectures(): List<String> {
 android {
     namespace = "org.nehuatl.sample"
     compileSdk = 36
-    ndkVersion = "25.1.8937393"
+    ndkVersion = "29.0.13846066"
 
     defaultConfig {
         applicationId = "org.nehuatl.sample"

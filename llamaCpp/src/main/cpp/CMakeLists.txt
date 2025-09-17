@@ -52,6 +52,10 @@ function(build_library target_name cpu_flags)
         target_compile_options(${target_name} PRIVATE -DRNLLAMA_ANDROID_ENABLE_LOGGING)
     endif ()
 
+    target_compile_options(${target_name} PRIVATE -O3 -DNDEBUG -DRNLLAMA_USE_FD_FILE)
+    target_compile_options(${target_name} PRIVATE -fvisibility=hidden -fvisibility-inlines-hidden)
+    target_compile_options(${target_name} PRIVATE -ffunction-sections -fdata-sections)
+
     # NOTE: If you want to debug the native code, you can uncomment if and endif
     # Note that it will be extremely slow
     # if (NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")

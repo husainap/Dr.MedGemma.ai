@@ -43,7 +43,7 @@ val libsForPlatform = when (detectTargetPlatform()) {
 android {
     namespace = "org.nehuatl.llamacpp"
     compileSdk = 36
-    ndkVersion = "25.1.8937393"
+    ndkVersion = "29.0.13846066"
 
     defaultConfig {
         minSdk = 24
