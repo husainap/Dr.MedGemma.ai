@@ -198,6 +198,7 @@ class LlamaContext(private val id: Int, params: Map<String, Any>) {
     }
 
     fun completion(params: Map<String, Any>): Map<String, Any> {
+        Log.i(NAME, "Husain Completion" + params)
         //TODO: log->"completion start".v()
         if (!params.containsKey("prompt")) {
             throw IllegalArgumentException("Missing required parameter: prompt")
@@ -267,6 +268,7 @@ class LlamaContext(private val id: Int, params: Map<String, Any>) {
         if (result.containsKey("error")) {
             throw IllegalStateException(result["error"] as String)
         }
+        Log.i(NAME, "Husain Completion end " + result)
         return result
     }
 

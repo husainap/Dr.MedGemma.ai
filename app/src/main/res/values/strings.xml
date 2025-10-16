@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">KotlinLlamaCpp</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name">Dr.MedGemma.ai</string>
+    <string name="app_title">🧠Dr. MedGemma.ai🧠</string>
+    <string name="title_activity_main">Dr.MedGemma.ai</string>
 </resources>

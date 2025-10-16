@@ -252,7 +252,7 @@ Java_org_nehuatl_llamacpp_LlamaContext_initContext(
     auto llama = new rnllama::llama_rn_context();
     bool is_model_loaded = llama->loadModel(defaultParams);
 
-    LOGI("[RNLlama] is_model_loaded %s", (is_model_loaded ? "true" : "false"));
+    LOGI("[RNLlama] Husain is_model_loaded %s", (is_model_loaded ? "true" : "false"));
     if (is_model_loaded) {
         context_map[(long) llama->ctx] = llama;
     } else {
