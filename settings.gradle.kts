@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "KotlinLlamaCpp"
+rootProject.name = "Dr.MedGemma.ai"
 include(":app")
 include(":llamaCpp")
