@@ -4,6 +4,8 @@
 
 ## Android appliccation - MedGemma Distilled model integration on Android platform
 
+
+<img src="Screenshot.jpg" alt="App Screenshot" width="300"/>
 To integrate MedGemma Distilled model to Androdi, the Pytorch model needs to be converted to a GGUF format using [llama.cpp](https://github.com/ggerganov/llama.cpp)
 
 ## this project is forked from  [Kotlin-LlamaCpp](https://github.com/ljcamargo/kotlinllamacpp/) 
