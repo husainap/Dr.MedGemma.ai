@@ -14,6 +14,12 @@ The converted .gguf model shoud be put under  **app/src/main/assets/** folder.
 Since gguf model file size is around 900MB, cannot be placed github. 
 (Only dummy filed is kept, while buiding the application actual gguf fike
 
+### MedGemma Distilled Model & GGUF Model
+- MedGemma Model Distilled with Sensor Data is shared in Google Drive [[MedGemma]](https://drive.google.com/drive/folders/1B1ka_vVF533vFVd-9ypdtQbo_0fv3uN-?usp=drive_link)
+- gguf model is shared in Google Drive [[GGUF]](https://drive.google.com/drive/folders/1hqIq_0rgWtYzPPRTo4n7SiTbvQ1T47Br?usp=drive_link)
+
+
+
 ## Environment Setup
 
 You'll need a GGUF model file to before importing this app on Android Studio.
