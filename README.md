@@ -1,120 +1,58 @@
-# Kotlin-LlamaCpp
+# Dr.MedGemma.ai
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-Run GGUF models on your android app with ease!
+## Android appliccation - MedGemma Distilled model integration on Android platform
 
-This is a Android binding for [llama.cpp](https://github.com/ggerganov/llama.cpp) written in Kotlin, designed for native Android applications. This project is inspired (forked) by [cui-llama.rn](https://github.com/Vali-98/cui-llama.rn) and [llama.cpp](https://github.com/ggerganov/llama.cpp): Inference of [LLaMA](https://arxiv.org/abs/2302.13971) model in pure C/C++but specifically tailored for Android development in Kotlin.
+To integrate MedGemma Distilled model to Androdi, the Pytorch model needs to be converted to a GGUF format using [llama.cpp](https://github.com/ggerganov/llama.cpp)
 
-This is a very early alpha version and API may change in the future.
+## this project is forked from  [Kotlin-LlamaCpp](https://github.com/ljcamargo/kotlinllamacpp/) 
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P6149YRQ)
+The converted .gguf model shoud be put under  **app/src/main/assets/** folder.  
+Since gguf model file size is around 900MB, cannot be placed github. 
+(Only dummy filed is kept, while buiding the application actual gguf fike
 
-## News
-- Library has been updated to comply with 16kb pagination now enforced
+## Environment Setup
 
-## Features
-
-- Helper class to handle initialization and context handling
-- Native Kotlin bindings for llama.cpp
-- Support for stopping prompt processing between batches
-- Vocabulary-only mode for tokenizer functionality
-- Synchronous tokenizer functions
-- Context Shift support (from [kobold.cpp](https://github.com/LostRuins/koboldcpp))
-- XTC sampling implementation
-- Progress callback support
-- CPU feature detection (i8mm and dotprod flags)
-- Seamless integration with Android development workflow
+You'll need a GGUF model file to before importing this app on Android Studio.
 
 
-## Installation
+## GGUF Model Creation. 
 
-Add the following to your project's `build.gradle`:
+.gguf modeis generated using Llamma.cpp. (I created evething on Mac Machine)
+- Make sure pytrhon version is 3.11 + (python --version  & brew install python@3.11 )
+- I built Llama.cpp locally using [LLama.cpp Build](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md)
 
-```gradle
-dependencies {
-    implementation 'io.github.ljcamargo:llamacpp-kotlin:0.1.0'
-}
-```
+    - python3.11 -m venv llama-env
+    - source llama-env/bin/activate
+    - git clone https://github.com/ggerganov/llama.cpp
+    - cd llama.cpp
+    - pip3 install -r requirements.txt
+    - brew install cmake ( on mac if make is not available)
+    - mkdir build && cd build
+    - cmake .. -DLLAMA_BUILD_EXAMPLES=ON -DLLAMA_BUILD_TESTS=ON
+    - cmake --build . --config Release -j
+      
+  This will build and make llama.cpp binaries and binaries will be in foldet **"build/bin"**
+  
+  Here cmake -j can be passed with number of CPU cores available inorder to speed up the buid 
 
-## Model Requirements
+  on Mac  -j$(sysctl -n hw.ncpu)
 
-You'll need a GGUF model file to use this library. You can:
+## generate gguf model using  convert_hf_to_gguf.py
+python3 convert_hf_to_gguf.py ../Sensor_distilled_new/ --outfile ../sensor_model.gguf --outtype f16
+ - this convert_hf_to_gguf.py convert pytorch  model present in folder "../Sensor_distilled_new/" to "../sensor_model.gguf" in the same folder.
+- This "sensor_model.gguf" file needs to be placed in android asset folder.
 
-- Download pre-converted GGUF models from [HuggingFace](https://huggingface.co/search/full-text?q=GGUF&type=model)
-- Convert your own models following the [llama.cpp quantization guide](https://github.com/ggerganov/llama.cpp#prepare-and-quantize)
+# For testing the generated .gguf file, we can use llama.cpp cli, which will be there in bin folder
+./build/bin/llama-cli  -m ../sensor_model.gguf  -p "Hello, world"
 
-## Usage
 
-Check this example ViewModel using LlamaHelper class for basic usage
+## for quantization use llama-quantize
+  ./build/bin/llama-quantize  --allow-requantize ../sensor_model.gguf ../sensor_model_q4_0.gguf q4_0
 
-```kotlin
-class MainViewModel: ViewModel() {
 
-    private val viewModelJob = SupervisorJob()
-    private val scope = CoroutineScope(Dispatchers.IO + viewModelJob)
-    private val llamaHelper by lazy { LlamaHelper(scope) }
-    
-    val text = MutableStateFlow("")
 
-    // load model into memory
-    suspend fun loadModel() {
-        llamaHelper.load(
-            path = "/sdcard/Download/llama.ggmlv3.q4_0.bin",
-            contextLength = 2048,
-        )
-    }
-
-    // model should be loaded before submitting or an exception will be thrown
-    suspend fun submit(prompt: String) {
-        // collector must be called before predict
-        llamaHelper.setCollector()
-            .onStart {
-                Log.i("MainViewModel", "prediction started")
-                // prediction started, prepare your UI
-                // the first token will arrive after some seconds of warmup
-                text.emit("")
-            }
-            .onCompletion {
-                Log.i("MainViewModel", "prediction ended")
-                // onCompletion will be triggered when finished or aborted
-                llamaHelper.unsetCollector() // unset collector
-            }
-            .collect { chunk ->
-                Log.i("MainViewModel", "prediction $chunk")
-                // collect chunks of text as they arrive
-                // you can, for example, emit to a StateFlow to observe it in your UI
-                text.value += chunk
-            }
-        llamaHelper.predict(
-            prompt = prompt,
-            partialCompletion = true
-        )
-    }
-
-    // you can abort the model load or prediction in progress
-    fun abort() {
-        Log.i("MainViewModel", "prediction ended")
-        llamaHelper.abort()
-    }
-
-    // don't forget to release resources when your viewmodel is destroyed
-    override fun onCleared() {
-        super.onCleared()
-        llamaHelper.abort()
-        llamaHelper.release()
-    }
-}
-```
-
-You can also use LlamaContext.kt directly to handle several contexts or other complex features
-
-## Performance Considerations
-
-- The library currently supports arm64-v8a and x86_64 platforms
-- 64-bit platforms are recommended for better memory allocation
-- CPU feature detection helps optimize performance based on device capabilities
-- Batch processing can be interrupted, which is crucial for mobile devices with limited processing power
 
 ## Contributing
 
