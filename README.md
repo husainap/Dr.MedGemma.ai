@@ -3,8 +3,10 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Android appliccation - MedGemma Distilled model integration on Android platform
+#### - App developement don using Android Studio Narwhal 3 Feature Drop | 2025.1.3 
+#### - on Mac Pro M4
 
-
+## Android App Screen Shot
 <img src="Screenshot.jpg" alt="App Screenshot" width="300"/>
 To integrate MedGemma Distilled model to Androdi, the Pytorch model needs to be converted to a GGUF format using [llama.cpp](https://github.com/ggerganov/llama.cpp)
 
